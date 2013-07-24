@@ -17,7 +17,7 @@ module.exports = class View
 
   # @property [String] namespace
   namespace : null
-  
+
   # @property [theoricus.core.Process] process
   process   : null
 
@@ -33,7 +33,7 @@ module.exports = class View
   @param [Object] @el     Element where the view will be "attached/appended"
   ###
   _render:( data = {}, template )=>
-    @data = 
+    @data =
       view: @
       params: @process.params
       data: data
@@ -63,19 +63,16 @@ module.exports = class View
       # binds item if the data passed is a valid Model
       if (@data instanceof Model)
         @data.bind dom, !@the.config.autobind
-      
+
       @set_triggers?()
       @after_render?(@data)
 
       @in()
 
       if @on_resize?
-        $( window ).unbind 'resize', @_on_resize
-        $( window ).bind   'resize', @_on_resize
+        $( window ).unbind 'resize', @on_resize
+        $( window ).bind   'resize', @on_resize
         @on_resize()
-
-  _on_resize:=>
-    do @on_resize
 
   ###
   In case you defined @events in your view they will be automatically binded
@@ -121,7 +118,7 @@ module.exports = class View
   ###
   destroy: () ->
     if @on_resize?
-      $( window ).unbind 'resize', @_on_resize
+      $( window ).unbind 'resize', @on_resize
 
     @before_destroy?()
     @el.empty()
